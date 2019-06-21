@@ -12,6 +12,8 @@
 namespace AndyDune\StringContainer\Action;
 
 
+use voku\helper\UTF8;
+
 class RemoveDuplicateWords extends AbstractAction
 {
     protected $wordsNotRemove = [];
@@ -44,8 +46,8 @@ class RemoveDuplicateWords extends AbstractAction
                 break;
             }
 
-            $char = substr($string, 0, 1);
-            $string = substr($string, 1);
+            $char = UTF8::substr($string, 0, 1);
+            $string = UTF8::substr($string, 1);
 
             if (!preg_match('|\s+|ui', $char)) {
                 $currentWord .= $char;
@@ -97,8 +99,8 @@ class RemoveDuplicateWords extends AbstractAction
                 break;
             }
 
-            $char = substr($string, 0, 1);
-            $string = substr($string, 1);
+            $char = UTF8::substr($string, 0, 1);
+            $string = UTF8::substr($string, 1);
 
             if (!preg_match('|\s+|ui', $char)) {
                 $currentWord .= $char;

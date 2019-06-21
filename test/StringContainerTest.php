@@ -13,11 +13,21 @@ namespace AndyDuneTest\StringContainer;
 
 use AndyDune\StringContainer\StringContainer;
 use PHPUnit\Framework\TestCase;
+use voku\helper\UTF8;
 
 class StringContainerTest extends TestCase
 {
+    public function testUtf()
+    {
+        $words = UTF8::str_to_words('Very 
+        cool.');
+        $this->assertEquals(['', 'Very', ' 
+        ', 'cool', '.'], $words);
+    }
+
     public function testStringContainer()
     {
+
         $container = new StringContainer('Very cool.');
         $this->assertEquals('Very cool.', $container->getString());
         $this->assertEquals('Very cool.', $container());
