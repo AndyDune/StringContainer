@@ -32,6 +32,9 @@ class StringContainerTest extends TestCase
 
     }
 
+    /**
+     * @covers \AndyDune\StringContainer\Action\RemoveDuplicateSpaces::__invoke
+     */
     public function testRemoveDuplicateSpaces()
     {
         $container = new StringContainer('Very    
@@ -39,14 +42,41 @@ class StringContainerTest extends TestCase
         $this->assertEquals('Very cool.', $container->removeDuplicateSpaces()->getString());
     }
 
+    /**
+     * @covers \AndyDune\StringContainer\Action\RemoveDuplicateWords::__invoke
+     */
+
     public function testRemoveDuplicateWords()
     {
         $container = new StringContainer('Very very cool cooly.');
         $this->assertEquals('Very  cool cooly.', $container->removeDuplicateWords()->getString());
 
+
+        $container = new StringContainer('Very very cool cooly.');
+        $this->assertEquals('Very cool cooly.', $container->removeDuplicateWords()->removeDuplicateSpaces()->getString());
+
+
         $container = new StringContainer('Каталог взрослая обувь KEDDO взрослая оптом в Липецке');
         $this->assertEquals('Каталог взрослая обувь KEDDO  оптом в Липецке', $container->removeDuplicateWords()->getString());
 
+        $container = new StringContainer('the word the peace');
+        $this->assertEquals('the word  peace', $container->removeDuplicateWords()->getString());
+
+        $container = new StringContainer('the word the peace');
+        $this->assertEquals('the word the peace', $container->removeDuplicateWords('the')->getString());
+
+
+        $container = new StringContainer('many worlds many worlds');
+        $this->assertEquals('many worlds  ', $container->removeDuplicateWords()->getString());
+
+        $container = new StringContainer('many worlds many worlds');
+        $this->assertEquals('many worlds  worlds', $container->removeDuplicateWords(null, 'many')->getString());
+
+        $container = new StringContainer('many worlds many worlds');
+        $this->assertEquals('many worlds many worlds', $container->removeDuplicateWords(null, ['one'])->getString());
+
+        $container = new StringContainer('many worlds many worlds');
+        $this->assertEquals('many worlds  ', $container->removeDuplicateWords(null, ['worlds', 'many'])->getString());
     }
 
 }

@@ -18,7 +18,7 @@ use Closure;
  * Class StringContainer
  *
  * @method StringContainer removeDuplicateSpaces
- * @method removeDuplicateWords
+ * @method StringContainer removeDuplicateWords($wordsNotToRemove, $wordsToRemove)
  *
  * @package AndyDune\StringContainer
  */

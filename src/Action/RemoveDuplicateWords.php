@@ -14,8 +14,26 @@ namespace AndyDune\StringContainer\Action;
 
 class RemoveDuplicateWords extends AbstractAction
 {
+    protected $wordsNotRemove = [];
+    protected $wordsToRemove = [];
+
     public function __invoke(...$params)
     {
+        if (isset($params[0])) {
+            $this->wordsNotRemove = $params[0];
+            if (!is_array($this->wordsNotRemove)) {
+                $this->wordsNotRemove = [$this->wordsNotRemove];
+            }
+        }
+
+        if (isset($params[1])) {
+            $this->wordsToRemove = $params[1];
+            if (!is_array($this->wordsToRemove)) {
+                $this->wordsToRemove = [$this->wordsToRemove];
+            }
+
+        }
+
         $string = $this->stringContainer->getString();
 
         $resultString = '';
@@ -34,9 +52,15 @@ class RemoveDuplicateWords extends AbstractAction
                 continue;
             }
 
-            if ($currentWord) {
+            if (!$currentWord) {
+                $resultString .= $char;
+                continue;
+            }
+
+            if ($this->isCanBeRemoved($currentWord)) {
                 $string = $this->removeWordFromString($currentWord, $string);
             }
+
             $resultString .= $currentWord . $char;
             $currentWord = '';
         }
@@ -46,6 +70,22 @@ class RemoveDuplicateWords extends AbstractAction
         }
 
         $this->stringContainer->setString($resultString);
+    }
+
+    private function isCanBeRemoved($word)
+    {
+        if ($this->wordsToRemove) {
+            if (in_array($word, $this->wordsToRemove)) {
+                return true;
+            }
+            return false;
+
+        }
+
+        if (in_array($word, $this->wordsNotRemove)) {
+            return false;
+        }
+        return true;
     }
 
     protected function removeWordFromString($word, $string)
@@ -80,7 +120,10 @@ class RemoveDuplicateWords extends AbstractAction
         }
 
         if ($currentWord) {
-            $resultString .= $currentWord;
+            $pattern = sprintf('|^%s$|ui', $currentWord);
+            if (!preg_match($pattern, $word)) {
+                $resultString .= $currentWord;
+            }
         }
 
         return $resultString;
