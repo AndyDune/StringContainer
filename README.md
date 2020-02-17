@@ -7,3 +7,17 @@
 
 
 Collection of functions fo string modification. Collection is composed as stratefy pattern with simple extension.
+
+## Actions with string
+
+### Remove duplicate space symbols
+
+It replaces spaces, tabs and so on for regular `\s` with only one space symbol.
+
+```php
+use AndyDune\StringContainer\StringContainer;
+
+$container = new StringContainer('Very    
+cool.');
+'Very cool' == $container->removeDuplicateSpaces()->getString();
+```
