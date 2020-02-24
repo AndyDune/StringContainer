@@ -21,3 +21,14 @@ $container = new StringContainer('Very
 cool.');
 'Very cool' == $container->removeDuplicateSpaces()->getString();
 ```
+
+### Remove duplicate words
+
+It replaces words, if there are more then one in a string.
+
+```php
+use AndyDune\StringContainer\StringContainer;
+
+$container = new StringContainer('Very very cool cooly.');
+'Very  cool cooly.' == $container->removeDuplicateWords()->getString();
+```
