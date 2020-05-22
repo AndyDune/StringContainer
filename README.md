@@ -6,7 +6,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/andydune/string-container.svg?style=flat-square)](https://packagist.org/packages/andydune/string-container)
 
 
-Collection of functions fo string modification. Collection is composed as stratefy pattern with simple extension.
+Collection of functions fo string modification. Collection is composed as strategy pattern with simple extension.
 
 ## Actions with string
 
